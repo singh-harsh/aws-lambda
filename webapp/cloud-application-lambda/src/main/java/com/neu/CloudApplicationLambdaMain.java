@@ -4,7 +4,7 @@ package com.neu;
  * Hello world!
  *
  */
-public class App 
+public class CloudApplicationLambdaMain
 {
     public static void main( String[] args )
     {

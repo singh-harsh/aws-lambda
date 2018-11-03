@@ -5,9 +5,9 @@ import org.junit.Test;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Unit test for simple App.
+ * Unit test for simple CloudApplicationLambdaMain.
  */
-public class AppTest 
+public class CloudApplicationLambdaMainTest
 {
     /**
      * Rigorous Test :-)
