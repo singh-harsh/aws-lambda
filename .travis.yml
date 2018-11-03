@@ -8,14 +8,6 @@ sudo: false
 install: true
 
 script:
-  - pwd
-  - cd webapp/cloud-application-lambda
-  - mvn install -Dmaven.javadoc.skip=true -B -V
-  - cd target
-  - ls -al
-  - cd ../../..
-  - pwd
-  - ls -al
 
 after_success:
   - pwd
