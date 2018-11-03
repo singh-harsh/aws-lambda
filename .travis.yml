@@ -8,6 +8,7 @@ sudo: false
 install: true
 
 script:
+  - pwd
 
 after_success:
   - pwd
