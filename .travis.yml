@@ -42,7 +42,7 @@ deploy:
     function_name: "lambda-test"
     region: "us-east-1"
     runtime: "java8"
-    role: $role
+    # role: $role
     handler_name: "com.neu.lambda.Handler"
     on:
       branch: master
