@@ -32,7 +32,7 @@ exports.handler = async (event, context) => {
         },
         Message: { /* required */
             Body: { /* required */
-                HTML: {
+                Html: {
                     Charset: "UTF-8",
                     Data: "<p>Click the link below to reset your password:</p> <br> <b>http://mycloudwebapi.com/reset?email=" + to + "&token=4e163b8b-889a-4ce7-a3f7-61041e323c23<b>"
                 }
