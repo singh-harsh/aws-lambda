@@ -5,13 +5,41 @@ var ses = new aws.SES({
     region: 'us-east-1'
 });
 var docClient = new aws.DynamoDB.DocumentClient({
-   region: 'us-east-1' 
+    region: 'us-east-1'
 });
 
 exports.handler = async (event, context) => {
     const to = event.Records[0].Sns.Message;
-    var token = handleDynamo(to);
-    if(token !== '') {
+
+    var table = "csye6225";
+    var params = {
+        TableName: table,
+        KeyConditionExpression: "Email = :email",
+        ExpressionAttributeValues: {
+            ":email": to
+        }
+    };
+
+    var token = '';
+    var dbResult = await docClient.query(params).promise();
+    if (dbResult.Count === 0) {
+        console.log('Records not found!');
+        const uuidv1 = require('uuid');
+        token = uuidv1.v4();
+        const secondsSinceEpoch = Math.round(Date.now() / 1000);
+        var params = {
+            TableName: table,
+            Item: {
+                "Email": to,
+                "Id": token,
+                "ttl": secondsSinceEpoch + (60 * 15)
+            }
+        };
+        console.log("Adding a new item for " + to);
+        var putEmail = await docClient.put(params).promise();
+    }
+
+    if (token !== '') {
         // Create listIdentities params 
         console.log('Token value received is : ' + token);
         var params1 = {
@@ -52,49 +80,4 @@ exports.handler = async (event, context) => {
         console.log('===SENDING EMAIL===');
         await ses.sendEmail(params).promise();
     }
-};
-
-function handleDynamo(email) {
-    var table = "csye6225";
-    var params = {
-        TableName:table,
-        KeyConditionExpression: "Email = :email",
-        ExpressionAttributeValues: {
-            ":email": email
-        }
-    };
-
-    var items =[];
-    var token = '';
-    docClient.query(params, function(err, data) {
-        if (err) {
-            console.error("Unable to query. Error:", JSON.stringify(err, null, 2));
-        } else {
-            console.log("Query succeeded.");
-            items = data.Items;
-        }
-    });
-
-    if(items.length === 1) {
-        const uuidv1 = require('uuid/v1');
-        token = uuidv1();
-        const secondsSinceEpoch = Math.round(Date.now() / 1000);
-        var params = {
-            TableName:table,
-            Item:{
-                "Email": email,
-                "Id": token,
-                "ttl": secondsSinceEpoch + (60*20)
-            }
-        };
-        console.log("Adding a new item for " + email);
-        docClient.put(params, function(err, data) {
-            if (err) {
-                console.error("Unable to add item. Error JSON:" + JSON.stringify(err, null, 2));
-            } else {
-                console.log("Added item:" + JSON.stringify(data, null, 2));
-            }
-        });
-    }
-    return token;
 };
