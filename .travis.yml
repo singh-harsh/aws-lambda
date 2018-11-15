@@ -11,6 +11,10 @@ install: true
 script:
   - pwd
 
+before_install:
+  - pip install --user awscli
+  - aws configure set default.region us-east-1
+
 after_success:
   - pwd
   - ls -al
