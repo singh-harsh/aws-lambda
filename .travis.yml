@@ -29,7 +29,7 @@ after_success:
 
 deploy:
   - provider: s3
-    local_dir: codedeploy_artifact
+    local_dir: codedeployLambda_artifact
     bucket: $s3_bucket
     region: us-east-1
     skip_cleanup: true
@@ -38,4 +38,4 @@ deploy:
     on:
       branch: master
 after_deploy:
-   - aws lambda update-function-code --zip-file=fileb://codedeployLambda_artifact/csye6225-lambda.zip --region=us-east-1 --function-name=$lambda_funtion --publish
+   - aws lambda update-function-code --zip-file=fileb://codedeployLambda_artifact/csye6225-lambda.zip --region=us-east-1 --function-name=PasswordResetLambda --publish
