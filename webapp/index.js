@@ -41,7 +41,7 @@ exports.handler = async (event, context) => {
 
     if (token !== '') {
         // Create listIdentities params 
-        console.log('Token value received is : ' + token);
+        console.log('Token value received is: ' + token);
         var params1 = {
             IdentityType: "Domain",
             MaxItems: 10
