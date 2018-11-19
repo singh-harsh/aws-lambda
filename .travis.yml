@@ -19,7 +19,9 @@ after_success:
   - pwd
   - ls -al
   - mkdir codedeployLambda_artifact
-  - zip -r csye6225-lambda.zip webapp/index.js
+  - cd webapp
+  - ls -al
+  - zip -r csye6225-lambda.zip index.js
   - ls -al
   - mv csye6225-lambda.zip codedeployLambda_artifact/
   - ls -al
