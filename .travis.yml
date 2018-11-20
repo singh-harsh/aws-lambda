@@ -22,8 +22,9 @@ after_success:
   - cd webapp
   - ls -al
   - zip -r csye6225-lambda.zip index.js
+  - cd ..
   - ls -al
-  - mv csye6225-lambda.zip codedeployLambda_artifact/
+  - mv webapp/csye6225-lambda.zip codedeployLambda_artifact/
   - ls -al
   - pwd
   - cd codedeployLambda_artifact
