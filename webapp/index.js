@@ -32,7 +32,7 @@ exports.handler = async (event, context) => {
             Item: {
                 "Email": to,
                 "Id": token,
-                "ttl": secondsSinceEpoch + (60 * 20)
+                "ttl": secondsSinceEpoch + (60 * 15)
             }
         };
         console.log("Adding a new item for " + to);
